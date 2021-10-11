@@ -80,7 +80,7 @@ sudo composer require longman/telegram-bot
 cd vendor
 sudo composer require monolog/monolog
 
-# 將telegram-bot權限給www-data已供telegram使用
+# 將ipallow-tg-bot權限給www-data已供telegram使用
 # 不然會報錯下面的錯(有待調整)
 sudo chown -R www-data:www-data /home/jone/ipallow-tg-bot
 ```
