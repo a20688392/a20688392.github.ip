@@ -14,11 +14,49 @@ https://hackmd.io/kMpTb8XZRMGCo_p7hkZALQ
 可以不用重造且繼續往上加我們想設定的內容  
 網址:https://github.com/php-telegram-bot/core  
 
-## 如何設定ubuntu伺服器防火牆呢?  
+## 如何設定ubuntu伺服器防火牆呢?
+### 主要靠群組ID在看和
+### 是不是管理員來判斷有沒有權限~ 
 我的程式碼流程架構如下~  
 ![image](https://github.com/a20688392/ipallow-tg-bot/blob/images/cZFKcEn.png)
-### 第二步server配置
-到指定位置  
+## 第二步server配置
+
+### 時間沒修正的話應該會跑掉
+#### ntp 效時
+##### 由於這不是這邊的範疇就自己看摟~
+http://linux.vbird.org/linux_server/0440ntp.php
+#### 自動設定系統時間（調整時區）
+```bash=
+timedatectl list-timezones | grep Asia
+```
+#### 比方說我要設定台北的時區
+```bash=
+sudo timedatectl set-timezone Asia/Taipei
+
+### 先開通root
+首先要重新設定 Ubuntu 的 root 密碼, 輸入以下指令:
+
+```bash=
+sudo passwd root
+```
+修改了 root 密碼後, 開啟 sshd 的設定檔:
+
+```bash=
+sudo vi /etc/ssh/sshd_config
+```
+找到以下一行:
+>PermitRootLogin prohibit-password
+
+改為:
+>PermitRootLogin yes
+
+儲存檔案及離開編輯器, 重新啟動 sshd:
+```bash=
+sudo systemctl restart sshd
+```
+重新啟動 sshd 後, 便可以用 root 帳號發入 ssh.
+
+### 到你自己指定位置  
 例如我自己(jone)在/home/jone  
 ```bash=
 # 架設 apache
