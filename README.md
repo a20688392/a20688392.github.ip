@@ -67,13 +67,13 @@ sudo apt-get -y install php
 
 # 下載我們的自定義指令庫
 cd /hone/jone
-git clone https://gitlab.cmrdb.cs.pu.edu.tw/a20688392/telegram-bot.git -b 1.1.0-telegram-bot
+git clone https://github.com/a20688392/ipallow-tg-bot.git
 
 # 安裝composer
 sudo apt-get install composer
 
 # 下載telegram-bot庫
-cd telegram-bot
+cd ipallow-tg-bot
 sudo composer require longman/telegram-bot
 
 # 下載monolog裝自動寫log
@@ -82,9 +82,9 @@ sudo composer require monolog/monolog
 
 # 將telegram-bot權限給www-data已供telegram使用
 # 不然會報錯下面的錯(有待調整)
-sudo chown -R www-data:www-data /home/jone/telegram-bot
+sudo chown -R www-data:www-data /home/jone/ipallow-tg-bot
 ```
->it could not be created: Permission denied in /home/jone/telegram-bot/vendor/monolog/monolog/src/Monolog/Handler/StreamHandler.php:212\nStack trace:\n#0
+>it could not be created: Permission denied in /home/jone/ipallow-tg-bot/vendor/monolog/monolog/src/Monolog/Handler/StreamHandler.php:212\nStack trace:\n#0
 
 ### 最後結構應為下圖(簡圖)
 ![image](https://github.com/a20688392/ipallow-tg-bot/blob/images/g6D0vjZ.png)
