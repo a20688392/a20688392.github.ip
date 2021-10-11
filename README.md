@@ -10,7 +10,7 @@ https://hackmd.io/kMpTb8XZRMGCo_p7hkZALQ
 建議先讀一下webhook是甚麼~在後續比較好了解  
 ## php-telergam-bot/core
 在我寫好我後發現竟然有大大先寫了如此好用的code  
-這位大大已經幫我們建構起很好的架構~  
+這位Armando Lüscher大大已經幫我們建構起很好的架構~  
 可以不用重造且繼續往上加我們想設定的內容  
 網址:https://github.com/php-telegram-bot/core  
 
@@ -21,19 +21,29 @@ https://hackmd.io/kMpTb8XZRMGCo_p7hkZALQ
 到指定位置  
 例如我自己(jone)在/home/jone  
 ```bash=
-#下載我們的自定義指令庫
+# 架設 apache
+sudo apt-get -y install apache2
+
+# 看你要裝哪個版本(預設是裝7.2)
+sudo apt-get -y install php
+
+# 下載我們的自定義指令庫
 cd /hone/jone
 git clone https://gitlab.cmrdb.cs.pu.edu.tw/a20688392/telegram-bot.git -b 1.1.0-telegram-bot
-#安裝composer
+
+# 安裝composer
 sudo apt-get install composer
-#下載telegram-bot庫
+
+# 下載telegram-bot庫
 cd telegram-bot
 sudo composer require longman/telegram-bot
-#下載monolog裝自動寫log
+
+# 下載monolog裝自動寫log
 cd vendor
 sudo composer require monolog/monolog
-#將telegram-bot權限給www-data已供telegram使用
-#不然會報錯下面的錯(有待調整)
+
+# 將telegram-bot權限給www-data已供telegram使用
+# 不然會報錯下面的錯(有待調整)
 sudo chown -R www-data:www-data /home/jone/telegram-bot
 ```
 >it could not be created: Permission denied in /home/jone/telegram-bot/vendor/monolog/monolog/src/Monolog/Handler/StreamHandler.php:212\nStack trace:\n#0
@@ -51,6 +61,23 @@ ip 為哪一台server防火牆
 port為ssh的port  
 user,password使用者帳密  
 ![](https://github.com/a20688392/ipallow-tg-bot/blob/images/zP0eYUl.png)
+
+## 為了讓系統排成自動化把通行的全數刪除和恢復預設
+```bash=
+vim ip.sh
+//下面放進去
+
+#!/bin/bash
+iptables -F
+iptables -P INPUT   DROP
+iptables -P OUTPUT  ACCEPT
+iptables -P FORWARD ACCEPT
+#機器人的IP
+iptables -A INPUT -p tcp --dport 443 -s 91.108.6.78 -j ACCEPT
+iptables -A INPUT -p tcp --sport 443 -s 91.108.6.78 -j ACCEPT
+#要開自己這台ip給root連 記得192.168.1.100改成自己的
+iptables -A INPUT -s 192.168.1.100 -p all -j ACCEPT
+```
 
 ### 讓server能快速訪問telegram api server
 ```bash=
