@@ -64,6 +64,8 @@ sudo apt-get -y install apache2
 
 # 看你要裝哪個版本(預設是裝7.2)
 sudo apt-get -y install php
+# 沒裝執行程式ssh會發生意外
+sudo apt-get -y install php-ssh2
 
 # 下載我們的自定義指令庫
 cd /hone/jone
